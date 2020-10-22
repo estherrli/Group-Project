@@ -33,7 +33,7 @@ All of the data was collected by Netflix, and includes information on user ratin
 - How many observations (rows) are in your data?  
     [Netflix Prize](https://www.kaggle.com/netflix-inc/netflix-prize-data)  
     In the Netflix Prize dataset, the number of row ranges depending on each data table, one of them being 17296 rows.   
-    [Netflix Movies](https://www.kaggle.com/shivamb/netflix-shows/notebooks)  
+    [Netflix Movies](hhttps://www.kaggle.com/shivamb/netflix-shows)  
     In the Netflix Movies and TV shows, there are 6172 rows.  
     [Trending Shows](https://www.kaggle.com/ritesh2000/trending-tv-shows-on-netflix)  
     In Trending TV Shows on Netflix, there are 50 rows of data. 

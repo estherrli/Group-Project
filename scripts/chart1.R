@@ -21,4 +21,7 @@ ggplot(data = each_year) +
   geom_col(
     mapping = aes(x = release_year, y = number_released_in_year,
                   fill = type_media),
-    )
+    ) +
+  labs(x= "Movie Release Year", y = "Amount of Movies and TV Shows Released",
+     title = "Netflix Movie Release Year vs Amount Released", 
+     fill = "Type")

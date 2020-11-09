@@ -9,6 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Summary:
 
-This is our report about Netflix Title Data.
+This is our report about Netflix Title Data. We are researching the overall 
+topic of movies; what movies are popular, how many movies are released in a 
+give year, how different movie streaming platforms differ, etc. This data 
+set specifically covers movies that were added to  Netflix from 2014 to 
+2019. The data set includes the following columns: Show ID, Type, Title, 
+Director, Cast, County, Date Added, Release Year, Rating, Duration, Listed 
+Genre, and a Descrption. We used a collection of these variables to perform
+our summary calculations. 
+
+

@@ -1,12 +1,12 @@
 ---
 title: "Netflix Title Data"
-author: "Esther"
+author: "Esther, Megan, Cynthia"
 date: "11/5/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r include=FALSE}
+source("../Group-Project/scripts/aggregatetable.R")
 ```
 
 ## Summary:
@@ -17,7 +17,106 @@ give year, how different movie streaming platforms differ, etc. This data
 set specifically covers movies that were added to  Netflix from 2014 to 
 2019. The data set includes the following columns: Show ID, Type, Title, 
 Director, Cast, County, Date Added, Release Year, Rating, Duration, Listed 
-Genre, and a Descrption. We used a collection of these variables to perform
+Genre, and a Description. We used a collection of these variables to perform
 our summary calculations. 
 
+# Summary information function
+The most recent title added to Netflix is The Bling Ring. The average duration 
+of movies on Netflix is 99.10082 minutes. The year with the most released titles
+was 2018. The most common T.V. show rating on Netflix is TV-MA. There are 2222
+Netflix titles categorized under Dramas, and there are 668 titles listed under
+Documentaries.
 
+# Aggregate Table
+```{r aggregate_table, echo = FALSE}
+library(knitr)
+kable(by_year, caption = "Netflix Data")
+```
+The most pertinent observations from the aggregate table is that the number of 
+TV shows and movies clearly increase in the early 2000's, and the number of 
+movies increases at a higher rate than TV shows other than 1925, 1963, 2019, and 
+2020. 
+
+# Purposes of each chart
+
+
+
+Chart 1
+```{r chart1, echo = FALSE}
+each_year <- netflix_titles %>%
+  mutate(type_media = if_else(type == "Movie", 1, 0)) %>%
+  group_by(release_year) %>%
+  summarise(
+    number_released_in_year = n(),
+    num_movies = sum(type_media),
+    num_tvshows = number_released_in_year - num_movies,
+    movie_tvshow_difference = num_movies - num_tvshows
+  ) %>%
+  select(release_year, num_movies, num_tvshows) %>%
+  gather(key = type_media, value = number_released_in_year,
+         -release_year)
+
+ggplot(data = each_year) +
+  geom_col(
+    mapping = aes(x = release_year, y = number_released_in_year,
+                  fill = type_media),
+    ) +
+  labs(x= "Movie Release Year", y = "Amount of Movies and TV Shows Released",
+     title = "Netflix Movie Release Year vs Amount Released", 
+     fill = "Type")
+```
+
+
+This chart is a stacked bar chart that compares the number of movies and TV shows 
+released onto Netflix per year. A similar observation can be made as the 
+aggregate table, that there were more movies made than TV shows in the 2000's.
+There is also a exponential increase in the number of movies and TV 
+shows in the 2000's.
+
+
+Chart 2
+```{r chart2, echo = FALSE}
+library(ggplot2)
+library(RColorBrewer)
+
+ggplot(netflix_titles, aes(x = factor(type))) +
+  geom_bar(width = 0.5, fill = "skyblue1") +
+  geom_text(aes(label = ..count..), stat = "count", vjust = 1.5, colour = "white") +
+  labs(title = "Movies Vs TV Shows on Netflix")
+
+```
+
+
+This chart compares the number of TV Shows and Movies that were added to Netflix
+from 2009 to 2014. The graph clearly depicts the drastic difference in totals
+for each category, with a significantly larger amount of movies added than TV
+shows. In fact, there were two times the number of Movies compared to TV shows. 
+
+
+Chart 3
+```{r chart3, echo = FALSE}
+library(ggplot2)
+netflix_titles <- netflix_titles %>%
+  mutate(duration_nums = sub(" min", "", netflix_titles$duration))
+netflix_titles$duration_nums = strtoi(netflix_titles$duration_nums)
+
+movie_lengths <- netflix_titles %>% 
+  filter(type == "Movie") %>% 
+  select(release_year, duration_nums)
+
+
+ggplot(data = movie_lengths) +
+  geom_point(mapping = aes(x = release_year, y = duration_nums), 
+             alpha = 0.3) +
+  labs(x= "Movie Release Year", y = "Movie Duration (minutes)",
+       title = "Netflix Movie Duration vs. Release Year")
+```
+
+
+
+
+This is a scatterplot that displays the duration of movies versus the release year.
+Each point represents a movie on Netflix, From 1940 to 1960, we can see that there is a clear
+upward trend in movie duration, and after 1960, the plot appears to level out, with most
+movies lasting between 50 to 200 minutes. The density of the points also show that many more
+movies were created in the 2000s, and the number of movies released each year continues to increase.

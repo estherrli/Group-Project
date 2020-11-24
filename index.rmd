@@ -32,6 +32,7 @@ Documentaries.
 library(knitr)
 kable(by_year, caption = "Netflix Data")
 ```
+
 The most pertinent observations from the aggregate table is that the number of 
 TV shows and movies clearly increase in the early 2000's, and the number of 
 movies increases at a higher rate than TV shows other than 1925, 1963, 2019, and 

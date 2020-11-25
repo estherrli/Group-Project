@@ -19,3 +19,4 @@ ggplot(data = movie_lengths) +
              alpha = 0.3) +
   labs(x= "Movie Release Year", y = "Movie Duration (minutes)",
        title = "Netflix Movie Duration vs. Release Year")
+77

@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r include=FALSE}
+library(tidyverse)
 source("../Group-Project/scripts/aggregatetable.R")
 ```
 

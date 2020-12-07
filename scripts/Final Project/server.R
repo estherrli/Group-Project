@@ -6,8 +6,8 @@ library(plotly)
 library(stringr)
 
 #chart 1 data
-netflix_titles_raw <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
-netflix_titles <- netflix_titles_raw %>% 
+netflix_titles <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
+netflix_titles <- netflix_titles %>% 
     separate(listed_in, c("genre", "genre2", "genre3"), sep = ",") %>% 
     mutate(year_added = str_sub(netflix_titles$date_added, start = -4))
 movie_genres <- netflix_titles %>% 

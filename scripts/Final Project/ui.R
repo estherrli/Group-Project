@@ -16,8 +16,8 @@ intro_page <- tabPanel(
 ## PAGE 1 ##
 
 # Download datafiles
-netflix_titles_raw <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
-netflix_titles <- netflix_titles_raw %>% 
+netflix_titles <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
+netflix_titles <- netflix_titles %>% 
   separate(listed_in, c("genre", "genre2", "genre3"), sep = ",") %>% 
   mutate(year_added = str_sub(netflix_titles$date_added, start = -4))
 
@@ -120,7 +120,7 @@ page_two <- tabPanel(
                 p("For Genre, highest and
                   most amount of ratings were concentrated in
                   the genres of action, comedy, drama, and 
-                  documentarys for Rotten Tomatoes, and for
+                  documentaries for Rotten Tomatoes, and for
                   IMDb ratings, these genres were comedy, 
                   documentaries, and Drama")
             )
@@ -177,8 +177,8 @@ summary_page <- tabPanel(
     mainPanel(
         h1("Summary"),
         tags$strong("Movie Count Per Genre vs. Year Insights"),
-        p("Our movie count vs. year bar plot allowed us to see the total number of 
-          movies in each genre added to Netflix each year. A notable trend we
+        p("Our movie count vs. year bar plot allowed us to see the total number 
+          of movies in each genre added to Netflix each year. A notable trend we
           can see in the chart is that between 2016-2017, for many genres,
           there is a steep increase in the number of movies added to Netflix.
           Through this trend, we may be able to infer that these genres became

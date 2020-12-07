@@ -8,6 +8,7 @@ library(stringr)
 server <- function(input, output) {
     # Page 1 chart
     output$chart1 <- renderPlotly({
+        # Download datafiles
         filtered_data <- netflix_titles %>% 
             filter(type == "Movie") %>% 
             filter(genre == input$chart1_genre) %>% 

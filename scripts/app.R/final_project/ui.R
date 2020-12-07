@@ -10,7 +10,7 @@ library(stringr)
 netflix_stock <- read.csv("NFLX.csv")
 
 # Get a vector of column names select inputs
-y_options <- colnames(netflix_stock)
+y_options <- colnames(netflix_stock)[2:7]
 
 #introduction page
 intro_page <- tabPanel(
@@ -54,7 +54,24 @@ visual_page <- tabPanel(
     )
 )
 
-
+#summary page
+summary_page <- tabPanel(
+    "Summary",
+    mainPanel(
+        h2("Summary"),
+        p("Our year vs stock price scatter plot revealed a variety of
+          interesting trends. Firstly, Open, High, Low, and Close stock
+          prices reamined under 5 until 2010. After 2010, we see a nearly
+          exponential increase in stock prices through 2020, hitting 549
+          at its peak. This indicates that Netflix has been growing
+          exponentially and furthermore indicates and exponential increase
+          in Netflix use and consumption. When looking at trends in the volume
+          of Netflix stocks being traded, there is no clear trend (with two
+          peaks in 2004 and 2011. Overall, this graph collectively indicates
+          that Netflix stock's value is increasing exponentially, which
+          may further indicate and exponential increase in media consumption.")
+    )
+)
 
 
 
@@ -80,5 +97,6 @@ color_input <- selectInput(
 ui <- navbarPage(
     "Climate Change", 
     intro_page,
-    visual_page
+    visual_page,
+    summary_page
 )

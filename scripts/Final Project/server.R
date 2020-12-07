@@ -1,8 +1,33 @@
 library(shiny)
-library(tidyverse)
+library(shinythemes)
 library(ggplot2)
+library(tidyverse)
 library(plotly)
 library(stringr)
+
+#chart 1 data
+netflix_titles_raw <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
+netflix_titles <- netflix_titles_raw %>% 
+    separate(listed_in, c("genre", "genre2", "genre3"), sep = ",") %>% 
+    mutate(year_added = str_sub(netflix_titles$date_added, start = -4))
+movie_genres <- netflix_titles %>% 
+    filter(type == "Movie") %>% 
+    pull(genre) %>% 
+    unique()
+
+#chart 2 data
+data_tab2 <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/MoviesOnStreamingPlatforms_updated.csv")
+
+tab2_columns <- data_tab2 %>% 
+    filter(Year == max(Year)) %>% 
+    separate(Genres, c("Genre", "Genre2", "Genre3"), sep = ",") %>% 
+    select(Age, Runtime, Genre, IMDb, Rotten.Tomatoes, Title) 
+
+tab2_select_values <- colnames(tab2_columns)
+
+#chart 3 data
+netflix_stock <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/NFLX.csv")
+y_options <- colnames(netflix_stock)[2:7]
 
 
 server <- function(input, output) {

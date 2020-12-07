@@ -1,6 +1,7 @@
 library(shiny)
+library(shinythemes)
 library(ggplot2)
-library(dplyr)
+library(tidyverse)
 library(plotly)
 library(stringr)
 
@@ -15,9 +16,10 @@ intro_page <- tabPanel(
 ## PAGE 1 ##
 
 # Download datafiles
-netflix_titles <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
-netflix_titles <- netflix_titles %>% 
-    separate(listed_in, c("genre", "genre2", "genre3"), sep = ",")
+netflix_titles_raw <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project/main/data/netflix_titles.csv")
+netflix_titles <- netflix_titles_raw %>% 
+  separate(listed_in, c("genre", "genre2", "genre3"), sep = ",") %>% 
+  mutate(year_added = str_sub(netflix_titles$date_added, start = -4))
 
 # Get vector of movie genres to use for widget
 movie_genres <- netflix_titles %>% 
@@ -45,7 +47,7 @@ page_one <- tabPanel(
     h1("Netflix Movie Genre Exploration"),
     sidebarLayout(
         sidebarPanel(p(chart1_genre), p(chart1_color)),
-        mainPanel(p(plotlyOutput("chart1")))
+        mainPanel(p(plotlyOutput("chart1", height = "700px")))
     ),
     p("This interactive bar chart displays the number of movies added to Netflix
     each year for a chosen genre. The chosen genre can be altered using the
@@ -71,7 +73,7 @@ tab2_select_values <- colnames(tab2_columns)
 
 page_two <- tabPanel(
     "Movie Ratings",
-    h1("Comparing Ratings to Specific Variables"),
+    h1("Comparing Ratings to Specific Variables in 2020"),
     sidebarLayout(
         sidebarPanel(
             x_input <- selectInput(
@@ -103,6 +105,10 @@ page_two <- tabPanel(
         mainPanel(
             ui <- fluidPage(
                 plotlyOutput("chart2", height = "700px"),
+                p("This scatterplot graphs different variables, 
+                  including Age, Runtime, and Genre, against
+                  different ratings (either IMDb or Rotten Tomatoes)
+                  for movies that were released in the year 2020."),
                 p("While many of the chart options did not seem to have clear
                   correlations, some scatterplots showed to have some
                   sort of pattern to them. In terms of Age rating for 
@@ -152,7 +158,7 @@ page_three <- tabPanel(
             )
         ),
         mainPanel(
-            plotlyOutput(outputId = "chart3"),
+            plotlyOutput(outputId = "chart3", height = "700px"),
         )
     ),
     p("This scatter plot graphs the different prices of Netflix stock
@@ -172,15 +178,15 @@ summary_page <- tabPanel(
         h1("Summary"),
         tags$strong("Movie Count Per Genre vs. Year Insights"),
         p("Our movie count vs. year bar plot allowed us to see the total number of 
-      movies in each genre added to Netflix each year. A notable trend we
-      can see in the chart is that between 2016-2017, for many genres,
-      there is a steep increase in the number of movies added to Netflix.
-      Through this trend, we may be able to infer that these genres became
-      more popular during this time period, as Netflix created more contracts
-      to add these types of movies to their streaming platform. Furthermore,
-      we can see that most of the genres have a steadily increasing count
-      as the year increases, which allows us to conclude that Netflix is 
-      steadily growing its collection of movies and genres."),
+          movies in each genre added to Netflix each year. A notable trend we
+          can see in the chart is that between 2016-2017, for many genres,
+          there is a steep increase in the number of movies added to Netflix.
+          Through this trend, we may be able to infer that these genres became
+          more popular during this time period, as Netflix created more contracts
+          to add these types of movies to their streaming platform. Furthermore,
+          we can see that most of the genres have a steadily increasing count
+          as the year increases, which allows us to conclude that Netflix is 
+          steadily growing its collection of movies and genres."),
         tags$strong("Stock Price vs. Year Insights"),
         p("Our year vs. stock price scatter plot revealed a variety of
           interesting trends. Firstly, Open, High, Low, and Close stock
@@ -192,7 +198,36 @@ summary_page <- tabPanel(
           of Netflix stocks being traded, there is no clear trend (with two
           peaks in 2004 and 2011. Overall, this graph collectively indicates
           that Netflix stock's value is increasing exponentially, which
-          may further indicate and exponential increase in media consumption.")
+          may further indicate and exponential increase in media consumption."),
+        tags$strong("Movie Ratings Vs Different Variables"),
+        p("Our movie ratings Vs dIfferent variables scatterplot
+          allowed us to compare and contrast different variables
+          and their affect on IMDb and Rotten Tomatoes ratings.
+          While not many correlations were obvious in the charts,
+          many pattterns emerged. First, we saw that age groups of
+          movies did not impact ratings as much as the other variables,
+          as many movies were not categorized as a specific age group,
+          therefore the chart has less datapoints to create any pattern.
+          However, it was clear that the most concentrated amount of
+          ratings in the runtimes of ~60 to ~150 minutes, and the higher
+          ratings in both IMDb and Rotten Tomatoes were mainly concentrated
+          in runtimes of ~85 minutes to ~100 minutes. This may infer that
+          movies that are too long or too short tend to have rushed or 
+          too slow of a plot. It may also mean that movies within this
+          timeframe (80 to 100 minutes) may be the best for all audiences
+          to enjoy. Lastly, the genre variable, the highest number of
+          ratings for both IMDb and Rotten Tomatoes were concentrated in 
+          Comedy, Documentaries, and Drama. Highest ratings were also
+          mainly in these categories. This may infer a couple of things, 
+          that directors of these specific genres are typically more 
+          skilled at keeping audiences engaged and therefore result
+          in higher ratings, or that audiences tend to watch more of
+          these genres and enjoy them more, regardless of technicalities
+          evident in the movie. Overall, some variables are 
+          shown to influence the number and the quality of ratings of
+          movies more than others.
+          ")
+        
     )
 )
 

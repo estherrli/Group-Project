@@ -1,0 +1,13 @@
+name: Netflix
+title: Netflix
+username:
+account: meganluu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3370383
+bundleId: 3958400
+url: https://meganluu.shinyapps.io/Netflix/
+when: 1607400942.78496
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData

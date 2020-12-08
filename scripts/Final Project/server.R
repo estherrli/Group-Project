@@ -21,7 +21,11 @@ data_tab2 <- read.csv("https://raw.githubusercontent.com/estherrli/Group-Project
 tab2_columns <- data_tab2 %>% 
     filter(Year == max(Year)) %>% 
     separate(Genres, c("Genre", "Genre2", "Genre3"), sep = ",") %>% 
-    select(Age, Runtime, Genre, IMDb, Rotten.Tomatoes, Title) 
+    select(Age, Runtime, Genre, IMDb, Rotten.Tomatoes, Title)
+
+tab2_columns$Rotten.Tomatoes <- gsub( "%", "", as.character(tab2_columns$Rotten.Tomatoes))
+
+tab2_columns$Rotten.Tomatoes <- as.numeric(tab2_columns$Rotten.Tomatoes)
 
 tab2_select_values <- colnames(tab2_columns)
 
@@ -60,7 +64,7 @@ server <- function(input, output) {
         p <- ggplot(tab2_columns, aes_string(x = input$x_var, y = input$y_var,
                                              Title = "Title")) +
             geom_point(stat = 'identity', color = input$color) +
-            labs(x = input$x_var, y = input$y_var, title = title)+
+            labs(x = input$x_var, y = input$y_var, title = title) +
             theme(axis.text.x=element_text(angle =- 90, vjust = 0.5))
         ggplotly(p, tooltip = c("x", "y", "Title"))
     })

@@ -68,6 +68,11 @@ tab2_columns <- data_tab2 %>%
     separate(Genres, c("Genre", "Genre2", "Genre3"), sep = ",") %>% 
     select(Age, Runtime, Genre, IMDb, Rotten.Tomatoes, Title) 
 
+tab2_columns$Rotten.Tomatoes <- gsub( "%", "", as.character(tab2_columns$Rotten.Tomatoes))
+
+tab2_columns$Rotten.Tomatoes <- as.numeric(tab2_columns$Rotten.Tomatoes)
+
+
 tab2_select_values <- colnames(tab2_columns)
 
 
